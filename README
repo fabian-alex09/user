@@ -1,0 +1,13 @@
+Program that creates, logs, and shows users. 
+
+
+//---------------------------------------------------------------------------
+To compile the program, use the following command:
+
+g++ -c main.cpp c main.cpp login/User.cpp login/UserManager.cpp
+g++ -o main main.o UserManager.o User.o
+
+
+//---------------------------------------------------------------------------
+To run the program, use the following command:
+./main
