@@ -1,12 +1,14 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "login/UserManager.h"
+#include <typeinfo>
+#include "includes/UserManager.h"
+
 
 using namespace std;
 
 
-void choiceFunc(int choice, UserManager &m);
+void choiceFunc(int &choice, UserManager &m);
 
 int main(){
     UserManager manager;
@@ -18,25 +20,59 @@ int main(){
         cout << "\t 1 - Register User" << endl;
         cout << "\t 2 - Login" << endl;
         cout << "\t 3 - Show Users" << endl;
-        cout << "\t 4 - Exit" << endl << endl;
+        cout << "\t 4 - Search User" << endl;
+        cout << "\t 5 - Delete User" << endl;
+        cout << "\t 6 - Exit" << endl << endl;
 
         cout << "Input:  ";
 
-        cin >> choice; 
+        cin >> choice;
 
-        choiceFunc(choice, manager);       
-    }while(choice!=4);
+        if(cin.fail()){
+            cin.clear();
+            cin.ignore();
+            choice = 7;
+        }
+        choiceFunc(choice, manager);                  
+        
+    }while(choice!=6);
     
 
     return 0;
 }
 
-void choiceFunc(int choice, UserManager &m){
+void choiceFunc(int &choice, UserManager &m){
     string name, pass;
+    bool valid;
 
     switch (choice){
         case 1:
-            m.registerUser();
+            do{
+                cout << "Enter Username: ";
+                cin >> name;
+
+                valid = m.userInputCheck(name);
+                if(!valid){
+                    cout << endl << "Error. Username must comply with the following: " << endl
+                        << "    Username cannot start with a number" << endl 
+                        << "    Username can only contain the characters A-Z, a-z, 0-9, '-', and '_'." << endl << endl;
+                }
+
+                //name = m.userInputMod(name);
+            }while(!valid);
+
+            do{
+                cout << "Enter Password: ";
+                cin >> pass;
+
+                valid = m.passInputCheck(pass);
+                if(!valid){
+                    cout << endl <<"Error. Password can only contain the characters A-Z, a-z, 0-9, '-', and '_'." << endl << endl;
+                }
+            }while(!valid);
+
+
+            m.registerUser(name, pass);
             break;
         case 2:
             cout << "Enter Username: ";
@@ -56,8 +92,38 @@ void choiceFunc(int choice, UserManager &m){
             m.showUsers();
             break;
         case 4:
-            cout << "Thank you for your time! We hope to see you again." << endl;
+            cout << "Search user name: ";
+        
+            cin >> name;
+
+            if(m.searchUser(name)){
+                cout << endl << "User " << name << " is in database!" << endl << endl;
+            }else{
+                cout << endl << "User " << name << " is not in database!" << endl << endl;
+            }
+            
+            break;
+        case 5:
+            cout << "Delete user name: ";
+      
+            cin >> name;
+
+            if(m.searchUser(name)){
+                m.deleteUser(name);
+                cout << endl << "User " << name << " is now deleted from database!" << endl << endl;
+            }else{
+                cout << endl << "User " << name << " is not in database!" << endl << endl;
+            }
+
+            break;
+        case 6:
+            cout << "Thank you for your time! " << endl << endl;
+            break;
+        case 7:
+            cout << endl << "ERROR! Unknown input." << endl << endl;
+            break;
         default:
-            cout << "Number not included in menu. Please try again." << endl << endl;
+            cout << "ERROR! Unknown input. Goodbye." << endl << endl;
+            break;
     }
-}
+} 

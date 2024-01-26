@@ -1,13 +1,22 @@
-Program that creates, logs, and shows users. 
+Simple user manager program that can create, delete, log in, and search for users. Usernames and hashed passwords are stored in a JSON format located under the '/data' directory.
 
 
 //---------------------------------------------------------------------------
-To compile the program, use the following command:
+Note that this program uses the open-source OpenSSL library. In order to properly compile, you must have OpenSSL installed in your device. 
 
-g++ -c main.cpp c main.cpp login/User.cpp login/UserManager.cpp
+To download:
+https://www.openssl.org/source/
+
+To build and install:
+https://github.com/openssl/openssl/blob/master/INSTALL.md
+
+//---------------------------------------------------------------------------
+To compile the program, use the following command:
+g++ -l/usr/include/openssl/ cryto.cpp -lcrypto
+g++ -c main.cpp includes/User.cpp includes/UserManager.cpp
 g++ -o main main.o UserManager.o User.o
 
 
 //---------------------------------------------------------------------------
-To run the program, use the following command:
+To run the executable, use the following command:
 ./main

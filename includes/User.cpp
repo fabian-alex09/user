@@ -1,6 +1,7 @@
 #include <string>
 #include <iostream>
 #include "User.h"
+
 using namespace std;
 
 
@@ -21,3 +22,4 @@ string User::getUser(){
 string User::getPassword(){
     return password;
 }
+
