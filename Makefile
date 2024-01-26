@@ -1,19 +1,27 @@
 
 CXX=g++
-OBJ_DIR = ./login
+INC_DIR = ./includes
 CXXFLAGS = -c 
+OBJECTS = main.o User.o UserManager.o
+
+$(OBJECTS) = *.o: *c *h
+
+
 
 output: main.o User.o UserManager.o
 	g++ main.o User.o UserManager.o -o main
 
 main.o: ./main.cpp
-	$(CXX) $(CFLAGS) ./main.cpp
+	$(CXX) -c ./main.cpp
 
-User.o: login/User.cpp login/User.h
-	$(CXX) $(CFLAGS) login/User.cpp
+User.o: ./includes/User.cpp ./includes/User.h
+	$(CXX) $(CXXFLAGS) ./includes/User.cpp
 
-UserManager.o: login/UserManager.cpp login/UserManager.h
-	$(CXX) $(CFLAGS) login/UserManager.cpp
+UserManager.o: ./includes/UserManager.cpp ./includes/UserManager.h
+	$(CXX) $(CXXFLAGS) ./includes/UserManager.cpp
+
+%.o : %.cpp %.h
+	$(CXX) -o $@ $< $(CXXFLAGS)
 
 clean:
 	rm *.o output
