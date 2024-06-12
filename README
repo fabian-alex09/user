@@ -1,4 +1,4 @@
-Simple user manager program that can create, delete, log in, and search for users. Usernames and hashed passwords are stored in a JSON format located under the '/data' directory.
+Simple user manager program that can create, delete, log in, and search for users. Usernames and hashed passwords are stored in a JSON format located under the '/data' directory. Will be updated to use a SQL database instead.
 
 
 //---------------------------------------------------------------------------
